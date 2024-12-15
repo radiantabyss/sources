@@ -1,0 +1,8 @@
+*
+!app/
+!framework/
+!geoip/
+!logs/
+!puppeteer/
+!test/
+!.gitignore

@@ -1,0 +1,15 @@
+.pointer {
+    cursor: pointer;
+}
+
+.handle {
+    cursor: grab;
+
+    svg {
+        pointer-events: none;
+    }
+}
+
+.click-through {
+    pointer-events: none !important;
+}

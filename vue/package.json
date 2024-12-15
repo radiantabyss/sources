@@ -1,0 +1,30 @@
+{
+    "name": "vue3",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "php artisan sass && php artisan static && php artisan sprite && vite --force",
+        "serve": "php artisan sass && php artisan static && php artisan sprite && vite --force",
+        "build": "vite build",
+        "preview": "vite preview",
+        "sprite": "",
+        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    },
+    "dependencies": {
+        "@radiantabyss/lumi-vue": "^3.0.0",
+        "dropzone": "^5.5.1",
+        "v-clipboard": "3.0.0-next.1",
+        "vue": "^3.4.21",
+        "vue-router": "^4.3.0",
+        "vue3-smooth-dnd": "^0.0.6",
+        "vuex": "^4.1.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.4",
+        "eslint": "^8.57.0",
+        "eslint-plugin-vue": "^9.23.0",
+        "sass": "^1.77.6",
+        "vite": "^5.2.8"
+    }
+}
