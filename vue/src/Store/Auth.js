@@ -1,5 +1,3 @@
-import RouteServiceProvider from '@/Providers/RouteServiceProvider';
-
 export default {
     namespaced: true,
     state: {

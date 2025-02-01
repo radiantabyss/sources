@@ -70,10 +70,6 @@ export default {
 
             this.submit();
         },
-
-        exportResults() {
-            window.open(`${back_url}${window.location.pathname}${window.location.search || '?'}&export=1&jwt_token=${localStorage.getItem('jwt_token')}`, '__blank');
-        },
     },
     mounted() {
         this.mount();

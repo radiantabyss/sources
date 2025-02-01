@@ -1,11 +1,18 @@
 <script>
-import Form from './../Forms/Form.vue';
-
 export default {
-    components: { Form },
+    data() {
+        return {
+            fields: {},
+        }
+    },
     methods: {
-        async submit(fields) {
-            let data = await Request.post('/auth/team/create', fields, true);
+        async submit(e) {
+            let fields = {
+                _event: e,
+                ...this.fields,
+            };
+
+            let data = await Request.post('/auth/team/create', fields);
             localStorage.setItem('jwt_token', data.jwt_token);
             window.location.href = '/dashboard';
         },
@@ -29,6 +36,31 @@ export default {
         </div>
     </div>
 
-    <Form @submit="submit" />
+    <form v-if="fields !== false">
+        <div class="grid mb-20">
+            <div class="panel col-50">
+                <div class="row">
+                    <label>Name</label>
+                    <input type="text" class="input" v-model="fields.name" />
+                </div>
+
+                <div class="row">
+                    <label>Logo</label>
+                    <image-upload v-model="fields.meta.image_path" :path="`/auth/team/upload-image/${fields.id}`" />
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="panel panel--rows col-50">
+                <div class="row row--submit">
+                    <button type="submit" @click.prevent="submit" class="btn btn--medium">
+                        Save
+                    </button>
+                    <a @click="$emit('cancel')"><sprite id="cancel" /> Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 </template>

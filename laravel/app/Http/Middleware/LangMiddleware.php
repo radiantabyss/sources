@@ -2,7 +2,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Lumi\Auth\Services\Jwt;
+use RA\Auth\Services\Jwt;
 
 class LangMiddleware
 {
@@ -35,7 +35,7 @@ class LangMiddleware
             return false;
         }
 
-        return $token->lang;
+        return $token->lang ?? config('app.default_lang');
     }
 
     private function getFromRequest($request) {

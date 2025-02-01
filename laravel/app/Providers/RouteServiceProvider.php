@@ -13,9 +13,12 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         // load auth routes
-        \Route::middleware('routes')
-            ->namespace('Lumi\Auth\Domains')
-            ->group(base_path('routes/lumi-auth.php'));
+        try {
+            \Route::middleware('routes')
+                ->namespace('RA\Auth\Domains')
+                ->group(base_path('routes/ra-auth.php'));
+        }
+        catch(\Exception $e) {}
 
         //load routes
         \Route::middleware('routes')

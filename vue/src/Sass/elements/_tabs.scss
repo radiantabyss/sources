@@ -13,12 +13,7 @@
         color: $text;
         text-decoration: none;
 
-        &:hover, &:active, &:focus {
-            color: $primary;
-        }
-
         &.active {
-            color: $primary;
             border-bottom: 2px solid $primary;
         }
     }
@@ -29,13 +24,7 @@
         a {
             color: $text--dark;
 
-            &:hover, &:active, &:focus, &.active  {
-                color: $primary--dark;
-            }
-
             &.active {
-                border-bottom: 2px solid $primary;
-
                 @include theme() {
                     border-color: $primary--dark;
                 }

@@ -1,5 +1,5 @@
 <?php
-use Lumi\Core\Route;
-use Lumi\Core\RouteCrud;
+use RA\Route;
+use RA\RouteCrud;
 
 Route::get('/', 'Index\IndexAction');

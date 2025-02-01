@@ -14,6 +14,15 @@ export default async (app) => {
         return;
     }
 
-    let url = import.meta.env.VITE_URL;
-    Translate = await Request.get(`/lang/${lang}.json?v=${Math.random()}`, {}, false, is_dev ? `${url}:8080` : url);
+    let url = import.meta.env.VITE_FRONT_URL;
+    if ( import.meta.env.MODE == 'development' ) {
+        url = `${url}:8080`;
+    }
+
+    try {
+        Translate = await Request.get(`/lang/${lang}.json?v=${Math.random()}`, {}, false, url);
+    }
+    catch(e) {
+        Translate = {};
+    }
 }

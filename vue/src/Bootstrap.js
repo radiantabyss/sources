@@ -4,7 +4,6 @@ import Clipboard from 'v-clipboard';
 //load support
 import Globals from './Support/Globals';
 import Helpers from './Support/Helpers';
-import Modal from './Support/Modal';
 import Settings from './Support/Settings';
 import Str from './Support/Str';
 
@@ -33,8 +32,4 @@ export default async (app) => {
     //settings
     window.Settings = Settings;
     app.config.globalProperties.Settings = Settings;
-
-    //modal
-    window.Modal = Modal;
-    app.config.globalProperties.Modal = Modal;
 }

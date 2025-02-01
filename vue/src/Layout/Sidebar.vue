@@ -2,36 +2,11 @@
 export default {
     name: 'Sidebar',
     data() {
-        let links = [
-            { url: '/', name: __('Dashboard'), icon: 'dashboard' },
-            { url: '/client', name: __('Clients'), icon: 'client' },
-            { url: '/project', name: __('Projects'), icon: 'project' },
-            { url: '/timereport', name: __('Timereport'), icon: 'timereport' },
-            { url: '/timereport/new', name: __('Log Time'), icon: 'log-time' },
-            { url: '' },
-            { url: '/invoice', name: __('Invoices'), icon: 'invoice' },
-            { url: '/statement', name: __('Statements'), icon: 'statement' },
-            { url: '/homebank-statement', name: __('Homebank Stmts'), icon: 'statement' },
-            { url: '/expense', name: __('Expenses'), icon: 'expense' },
-            { url: '/withdrawal', name: __('Withdrawals'), icon: 'withdrawal' },
-            { url: '/upwork-statement', name: __('Upwork Stmts'), icon: 'upwork' },
-            { url: '/report', name: __('Report'), icon: 'calculator' },
-        ];
-
-        if ( Auth.user.team.role == 'accountant' ) {
-            links = [
-                { url: '/timereport', name: __('Timereport'), icon: 'timereport' },
-                { url: '/invoice', name: __('Invoices'), icon: 'invoice' },
-                { url: '/statement', name: __('Statements'), icon: 'statement' },
-                { url: '/homebank-statement', name: __('Homebank Stmts'), icon: 'statement' },
-                { url: '/expense', name: __('Expenses'), icon: 'expense' },
-                { url: '/withdrawal', name: __('Withdrawals'), icon: 'withdrawal' },
-                { url: '/upwork-statement', name: __('Upwork Stmts'), icon: 'upwork' },
-            ];
-        }
-
         return {
-            links,
+            links: [
+                { url: '/', name: __('Dashboard'), icon: 'dashboard' },
+                { url: '/crud', name: 'Crud', icon: 'status' },
+            ],
         }
     },
     computed: {
@@ -143,7 +118,7 @@ export default {
             @mouseover="showSubmenu(i)"
             @mouseout="hideSubmenu(i)"
             ref="links"
-             v-if="link.children && link.children.length"
+            v-if="link.children && link.children.length"
         >
             <router-link :to="link.url">
                 <sprite :id="link.icon" v-if="link.icon" /> {{ link.name }}
@@ -162,7 +137,7 @@ export default {
             class="sidebar__link"
             :class="link.url.replace(/\?.*$/, '') == $route.path ? 'active' : ''"
             ref="links"
-             v-else-if="link.url"
+            v-else-if="link.url"
         >
             <sprite :id="link.icon" v-if="link.icon" /> {{ link.name }}
         </router-link>

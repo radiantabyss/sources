@@ -12,54 +12,24 @@ let self = {
             return roles.includes(Auth.user.team.role);
         });
 
-        Gate.define('delete-timereport', (item) => {
-            //check type
-            if ( Auth.user.type == 'client' ) {
-                return false;
+        Gate.define('owns-team', (team = null) => {
+            if ( !team ) {
+                team = Auth.user.team;
             }
 
-            //check if it belongs to the user
-            if ( Auth.user.id != item.user_id ) {
-                return false;
-            }
-
-            //check if it's old
-            let date = new Date();
-            date.setDate(date.getDate() - 2);
-            if ( new Date(item.created_at) < date ) {
-                return false;
-            }
-
-            return true;
+            return team.role == 'owner';
         });
 
-        Gate.define('delete-invoice', (item) => {
-            //check type
-            if ( Auth.user.type == 'client' ) {
-                return false;
+        Gate.define('manage-team', (team = null) => {
+            if (Auth.user.type == 'super_admin' ) {
+                return true;
             }
 
-            //check if it's old
-            let date = new Date();
-            date.setDate(date.getDate() - 2);
-            if ( new Date(item.created_at) < date ) {
-                return false;
+            if ( !team ) {
+                team = Auth.user.team;
             }
 
-            return true;
-        });
-
-        Gate.define('set-invoice-status', (item) => {
-            //check type
-            if ( Auth.user.type == 'client' ) {
-                return false;
-            }
-
-            if ( item.status == 'paid' ) {
-                return false;
-            }
-
-            return true;
+            return ['owner', 'admin'].includes(team.role);
         });
     },
 };

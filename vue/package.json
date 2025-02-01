@@ -4,15 +4,12 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "php artisan sass && php artisan static && php artisan sprite && vite --force",
-        "serve": "php artisan sass && php artisan static && php artisan sprite && vite --force",
-        "build": "vite build",
-        "preview": "vite preview",
-        "sprite": "",
+        "serve": "ra sass && ra static && ra sprite && vite --force",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
     },
     "dependencies": {
-        "@radiantabyss/lumi-vue": "^3.0.0",
+        "@radiantabyss/vue": "^3.1.1",
+        "@radiantabyss/vue-components": "^1.2.0",
         "dropzone": "^5.5.1",
         "v-clipboard": "3.0.0-next.1",
         "vue": "^3.4.21",
@@ -24,7 +21,8 @@
         "@vitejs/plugin-vue": "^5.0.4",
         "eslint": "^8.57.0",
         "eslint-plugin-vue": "^9.23.0",
-        "sass": "^1.77.6",
-        "vite": "^5.2.8"
+        "sass": "1.77.6",
+        "svg-sprite-generator": "^0.0.7",
+        "vite": "5.3.1"
     }
 }

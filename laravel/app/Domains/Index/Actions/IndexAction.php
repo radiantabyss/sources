@@ -2,7 +2,7 @@
 namespace App\Domains\Index\Actions;
 
 use Illuminate\Routing\Controller as Action;
-use Lumi\Core\Response;
+use RA\Response;
 
 class IndexAction extends Action
 {

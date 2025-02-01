@@ -1,26 +1,17 @@
 <script>
-import Members from '@/Domains/Auth/Team/Partials/Members';
-import Clients from '@/Domains/Auth/Team/Partials/Clients';
-import Company from '@/Domains/Auth/Team/Partials/Company';
+import Teams from './../Partials/Teams';
 
 export default {
-    metaInfo() {
-        return {
-            title: 'Account',
-        }
-    },
-    components: { Members, Clients, Company },
+    components: { Teams },
     data() {
         return {
             name: Auth.user.name,
-            profile_image_path: Auth.user.meta.profile_image_path,
-            dark_mode: Auth.user.meta.dark_mode,
-            lang: Auth.user.meta.lang,
+            profile_image_path: Auth.user.meta.profile_image_path || '',
+            dark_mode: Auth.user.meta.dark_mode || 0,
+            lang: Auth.user.meta.lang || '',
 
             current_password: '',
             password: '',
-
-            teams: false,
         }
     },
     methods: {
@@ -29,13 +20,13 @@ export default {
                 _event: e,
                 name: this.name,
                 meta: {
-                    profile_image_path: this.profile_image_path,
-                    dark_mode: this.dark_mode,
-                    lang: this.lang,
+                    profile_image_path: this.profile_image_path || '',
+                    dark_mode: this.dark_mode || 0,
+                    lang: this.lang || '',
                 }
             };
 
-            let data = await Request.post(`/auth/user/patch`, fields, true);
+            let data = await Request.post(`/auth/user/patch`, fields);
 
             //if lang has changed, refresh the page
             if ( this.lang != Auth.user.meta.lang ) {
@@ -43,7 +34,7 @@ export default {
             }
 
             this.$store.commit('Auth/SET', data.item);
-            Alert.show(__('Changes saved!'), 'success');
+            Alert.show('Changes saved!', 'success');
         },
 
         async submitChangePassword(e) {
@@ -53,13 +44,9 @@ export default {
                 password: this.password,
             };
 
-            await Request.post(`/auth/user/patch`, fields, true);
-            Alert.show(__('Changes saved!'), 'success');
+            await Request.post(`/auth/user/patch`, fields);
+            Alert.show('Changes saved!', 'success');
         },
-    },
-    async mounted() {
-        let data = await Request.get('/auth/team');
-        this.teams = data.items;
     },
 }
 </script>
@@ -97,10 +84,6 @@ export default {
                 <label><t>Dark Mode</t></label>
                 <toggle v-model="dark_mode" />
             </div>
-            <div class="row">
-                <label><t>Language</t></label>
-                <radio-buttons class="w-auto" v-model="lang" :options="{'en': 'EN', 'ro': 'RO'}" />
-            </div>
             <div class="row row--submit mti-30">
                 <button type="submit" @click.prevent="submit" class="btn btn--medium"><t>Save Changes</t></button>
             </div>
@@ -122,9 +105,7 @@ export default {
             </div>
         </form>
 
-        <Company v-if="Gate.allows('role', 'admin')" />
-        <Members v-if="Gate.allows('role', 'admin')" />
-        <Clients v-if="Gate.allows('role', 'admin')"/>
+        <Teams />
     </div>
 </div>
 </template>

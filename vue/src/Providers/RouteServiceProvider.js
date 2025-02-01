@@ -1,25 +1,22 @@
-import createRouter from '@lumi/Routing/Router';
+import createRouter from '@radiantabyss/vue/src/Routing/Router';
 
 export default async (app) => {
-    const { Router, RouteGroups } = await createRouter();
+    const { Router, RouteFiles } = await createRouter();
 
     //load auth routes
-    for ( let Route of RouteGroups.auth ) {
+    for ( let Route of RouteFiles.auth ) {
         Router.addRoute(Route);
     }
 
     //load general routes
-    for ( let Route of RouteGroups.routes ) {
+    for ( let Route of RouteFiles.routes ) {
         Router.addRoute(Route);
     }
 
-    if ( !Auth.user ) {
-        window.Router = Router;
-        app.use(Router);
-        return;
-    }
-
     //load routes by user type or team role
+    if ( Auth.user ) {
+
+    }
 
     window.Router = Router;
     app.use(Router);

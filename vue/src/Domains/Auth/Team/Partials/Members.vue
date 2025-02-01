@@ -6,34 +6,45 @@ export default {
     components: { InviteModal },
     data() {
         return {
+            team: false,
             items: false,
             total: false,
             pages: false,
+            loading: true,
             invites: false,
         }
     },
     methods: {
         async mount() {
-            let data = await Request.get(`/auth/team/list-members/${Auth.user.team.id}`);
+            this.loading = true;
+            let data = await Request.get(`/auth/team/edit/${this.$route.params.id}`);
+            this.team = data.item;
+
+            data = await Request.get(`/auth/team/list-members/${this.$route.params.id}`, {
+                page: this.$route.query.page || '',
+                per_page: this.$route.query.per_page || '',
+            });
 
             this.items = data.items;
             this.total = data.total;
             this.pages = data.pages;
             this.invites = data.invites;
+            this.loading = false;
         },
 
-        changeRole(id, e) {
-            Request.post(`/auth/team/change-role`, {
+        async changeRole(id, e) {
+            let fields = {
                 id,
                 role: e.target.value,
-                team_id: Auth.user.team.id,
-            }, true);
+                team_id: this.$route.params.id,
+            };
+
+            await Request.post(`/auth/team/change-role`, fields);
         },
 
         async deleteItem(id) {
             await Confirm({
-                question: 'Are you sure you want to delete this team member?',
-                button_text: 'Delete Team Member',
+                question: 'Are you sure you want to delete this user?',
             });
 
             await Request.get(`/auth/team/delete-member/${id}`);
@@ -41,90 +52,103 @@ export default {
         },
 
         async deleteInvite(id) {
-            await Confirm({
-                question: 'Are you sure you want to delete this invite?',
-            });
-
             await Request.get(`/auth/team/delete-invite/${id}`);
             this.invites = Items.delete(this.invites, id);
         },
 
         async resendInvite(id) {
             let data = await Request.post(`/auth/team/resend-invite/${id}`);
-            Alert.show(__('Invite resent!'), 'success');
+            Alert.show('Invite resent!', 'success');
             this.invites = Items.replace(this.invites, data.invite);
+        },
+
+        invitesSubmit(invites) {
+            this.invites = Items.addMany(this.invites || [], invites);
         },
     },
     mounted() {
         this.mount();
+    },
+    watch: {
+        $route() {
+            this.mount();
+        },
     },
 }
 </script>
 
 <template>
 
-<div class="panel col-50">
-    <div class="subtitle flex space-between">
-        <t>Members</t>
-        <a @click="Modal.show('invite')" class="btn btn--small btn--auto btn--icon-nm">
-            <sprite id="plus"/> <t>Invite Members</t>
-        </a>
+<div class="grid gap-20">
+    <div class="panel col-60">
+        <div class="subtitle flex space-between">
+            <span></span>
+            <a @click="Modal.show('invite')" class="btn btn--small btn--auto btn--icon-nm">
+                <sprite id="plus"/> Invite Members
+            </a>
+        </div>
+
+        <div class="table-wrapper">
+            <div class="loading-overlay" v-if="loading"><sprite id="request-spinner" /></div>
+
+            <template v-if="items !== false">
+                <template v-if="items.length">
+                    <pagination :url="`/auth/team/edit/${$route.params.id}?tab=members`" :pages="pages" :total="total" />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 10px;"></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in items" :key="item.id">
+                                <td>
+                                    <miniburger>
+                                        <a @click="Modal.show('manage-ad-accounts', { member: item })">
+                                            <sprite id="ad_account" /> Manage Ad Accounts
+                                        </a>
+                                        <a @click="deleteItem(item.id)" class="color-red" v-if="item.role != 'owner'">
+                                            <sprite id="trash" class="icon-link-small" /> Delete
+                                        </a>
+                                    </miniburger>
+                                </td>
+                                <td>{{ item.user.name }}</td>
+                                <td>{{ item.user.email }}</td>
+                                <td>
+                                    <span v-if="item.role == 'owner'">Owner</span>
+                                    <select class="input input--auto" @change="changeRole(item.id, $event)" v-else>
+                                        <option v-for="role in Settings.allowed_team_roles" :key="role" :value="role" :selected="role == item.role">
+                                            {{ Str.ucwords(role) }}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>{{ Str.prettify_datetime(item.created_at) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </template>
+                <template v-else>
+                    No members found.
+                </template>
+            </template>
+        </div>
     </div>
 
-    <template v-if="items !== false">
-        <template v-if="items.length">
-            <pagination :url="`/auth/team/list-members/${Auth.user.team.id}`" :pages="pages" :total="total" />
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="width: 40px;"></th>
-                        <th><t>Name</t></th>
-                        <th><t>Email</t></th>
-                        <th><t>Role</t></th>
-                        <th><t>Joined</t></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in items" :key="item.id">
-                        <td>
-                            <miniburger v-if="Gate.allows('role', 'admin')">
-                                <a @click="deleteItem(item.id)" class="color-red" v-if="item.role != 'owner'">
-                                    <sprite id="trash" class="icon-link-small" /> <t>Delete</t>
-                                </a>
-                            </miniburger>
-                        </td>
-                        <td>{{ item.user.name }}</td>
-                        <td>{{ item.user.email }}</td>
-                        <td>
-                            <span v-if="item.role == 'owner'"><t>Owner</t></span>
-                            <select class="input input--auto" @change="changeRole(item.id, $event)" v-else>
-                                <option v-for="role in Settings.allowed_team_roles" :key="role" :value="role" :selected="role == item.role">
-                                    {{ Str.ucwords(role) }}
-                                </option>
-                            </select>
-                        </td>
-                        <td>{{ Str.prettify_datetime(item.created_at) }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <pagination :url="`/auth/team/list-members/${Auth.user.team.id}`" :pages="pages" :total="total" />
-        </template>
-        <template v-else>
-            <t>No {{ Str.plural($route.params.type) }} found.</t>
-        </template>
-    </template>
-
-    <div class="row mti-40" v-if="invites && invites.length">
-        <div class="subtitle"><t>Invites</t></div>
+    <div class="panel col-40" v-if="invites && invites.length">
+        <div class="subtitle">Invites</div>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th style="width: 40px;"></th>
-                    <th><t>Email</t></th>
-                    <th><t>Role</t></th>
-                    <th><t>Expires at</t></th>
-                    <th style="width: 40px;"></th>
+                    <th style="width: 10px;"></th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Expires</th>
+                    <th style="width: 10px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -135,7 +159,7 @@ export default {
                         </a>
                     </td>
                     <td>{{ invite.email }}</td>
-                    <td><t>{{ Str.ucwords(invite.role) }}</t></td>
+                    <td>{{ Str.ucwords(invite.role) }}</td>
                     <td>{{ Str.prettify_datetime(invite.expires_at) }}</td>
                     <td>
                         <a @click="resendInvite(invite.id)" title="Resend Invite">
@@ -147,6 +171,6 @@ export default {
         </table>
     </div>
 
-    <InviteModal @submit="mount" />
+    <InviteModal />
 </div>
 </template>

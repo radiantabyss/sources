@@ -52,10 +52,10 @@ export default {
                 <div>{{ Auth.user.name }}</div>
             </div>
             <div class="header__team-image" @click="toggleMenu(!menu_visible)" ref="show_menu">
-                <img :src="uploads_url + Auth.user.meta.profile_image_path" v-if="Auth.user.meta.profile_image_path" />
+                <img :src="UPLOADS_URL + Auth.user.meta.profile_image_path" v-if="Auth.user.meta.profile_image_path" />
 
                 <div class="header__user-image">
-                    <img :src="uploads_url + Auth.user.team.meta.image_path" v-if="Auth.user.team.meta.image_path" />
+                    <img :src="UPLOADS_URL + Auth.user.team.meta.image_path" v-if="Auth.user.team.meta.image_path" />
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ export default {
             <div class="menu" v-show="menu_visible" v-if="Auth.user" v-closable="{exclude: ['show_menu'], handler: 'toggleMenu'}">
                 <div class="menu-user">
                     <div>
-                        <img :src="uploads_url + Auth.user.meta.profile_image_path" v-if="Auth.user.meta.profile_image_path" />
+                        <img :src="UPLOADS_URL + Auth.user.meta.profile_image_path" v-if="Auth.user.meta.profile_image_path" />
                     </div>
                     <span>
                         {{ Auth.user.name }}
@@ -82,7 +82,7 @@ export default {
 
                         <div v-show="menu_teams_visible">
                             <a v-for="team in $store.state.Auth.teams" :key="team.id" @click="switchTeam(team.id)" class="menu-links__team">
-                                <div><img :src="uploads_url + team.meta.image_path" v-if="team.meta.image_path" /></div>
+                                <div><img :src="UPLOADS_URL + team.meta.image_path" v-if="team.meta.image_path" /></div>
                                 {{ team.name }}
                             </a>
                         </div>

@@ -5,25 +5,13 @@ import Header from './Header.vue';
 import Sidebar from './Sidebar.vue';
 import Footer from './Footer.vue';
 
-let metaInfo = {
-    titleTemplate: '%s - Timereport',
-    meta: [
-        {charset: 'utf-8'},
-        {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-    ],
-    script: [],
-    __dangerouslyDisableSanitizersByTagID: {
-        'google-tag-manager': ['innerHTML']
-    },
-};
-
 export default {
     name: 'Layout',
-    metaInfo,
     components: { Header, Sidebar, Footer },
-    computed: {
-        app_class() {
-            let css_class = '';
+    methods: {
+        mount() {
+            let env = import.meta.env.VITE_ENV;
+            let css_class = `app env--${env} default-transition`;
 
             if ( Auth.user ) {
                 css_class += ' ' + (Auth.user.meta.dark_mode == 1 ? 'dark-mode' : 'light-mode');
@@ -40,41 +28,38 @@ export default {
                 css_class += ' sidebar-disabled';
             }
 
-            return css_class;
-        },
-
-        in_production() {
-            return import.meta.env.VITE_ENV == 'production';
-        },
+            document.getElementById('app').className = css_class;
+        }
     },
     mounted() {
-        let env = import.meta.env.VITE_ENV;
-        document.body.classList.add(`env--${env}`);
-        document.body.classList.add('default-transition');
+        this.mount();
+    },
+    watch: {
+        $route() {
+            this.mount();
+        }
     },
 }
 </script>
 
 <template>
-<div class="app" :class="`${app_class}`">
-    <alert />
-    <confirm />
+<alert />
+<confirm />
 
-    <template v-if="Auth.user">
-        <Header />
-        <Sidebar />
+<template v-if="Auth.user">
+    <Header />
+    <Sidebar />
 
-        <transition name="fade">
-            <div class="action-content">
-                <router-view :key="$route.path" />
-            </div>
-        </transition>
+    <transition name="fade">
+        <div class="action-content">
+            <router-view :key="$route.path" />
+        </div>
+    </transition>
 
-        <Footer />
-    </template>
+    <Footer />
+</template>
 
-    <template v-else>
-        <router-view />
-    </template>
-</div>
+<template v-else>
+    <router-view />
+</template>
 </template>
