@@ -9,31 +9,20 @@ export default {
     methods: {
         async switchTeam(team_id) {
             let data = await Request.post(`/auth/team/switch/${team_id}`);
-
-            this.$store.dispatch('Auth/login', {
-                item: data.user,
-                jwt_token: data.jwt_token,
-            });
-
-            //redirect to dashboard
-            this.$router.push('/dashboard');
-
-            Alert.show(`Switched to ${data.user.team.name}`, 'info');
+            localStorage.setItem('jwt_token', data.jwt_token);
+            window.location.href = import.meta.env.VITE_LOGIN_REDIRECT;
         },
 
         async deleteTeam(id) {
             await Confirm({
                 question: 'Are you sure you want to delete this team?',
-                text: 'Warning! Connected Social Accounts, Objects, Stats and Rules will also be deleted. This is permanent.',
             });
 
             let data = await Request.get(`/auth/team/delete/${id}`);
 
             if ( data ) {
-                this.$store.dispatch('Auth/login', {
-                    item: data.user,
-                    jwt_token: data.jwt_token,
-                });
+                localStorage.setItem('jwt_token', data.jwt_token);
+                window.location.reload();
             }
 
             //update teams
@@ -49,10 +38,8 @@ export default {
             let data = await Request.get(`/auth/team/leave/${id}`);
 
             if ( data ) {
-                this.$store.dispatch('Auth/login', {
-                    item: data.user,
-                    jwt_token: data.jwt_token,
-                });
+                localStorage.setItem('jwt_token', data.jwt_token);
+                window.location.reload();
             }
 
             //update teams

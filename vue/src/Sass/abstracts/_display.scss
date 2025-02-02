@@ -45,8 +45,11 @@
     position: relative;
 }
 
-.top-1 {
-    top: 1px;
+$tops: -5 -4 -3 -2 -1 0 1 2 3 4 5;
+@each $top in $tops {
+    .top-#{$top} {
+        top: #{$top}px !important;
+    }
 }
 
 .no-scroll {

@@ -28,7 +28,7 @@ export default {
         async switchTeam(team_id) {
             let data = await Request.post(`/auth/team/switch/${team_id}`);
             localStorage.setItem('jwt_token', data.jwt_token);
-            window.location.href = '/dashboard';
+            window.location.href = '/';
         },
     },
     async mounted() {
@@ -73,15 +73,19 @@ export default {
                 <div class="menu-links" :class="menu_teams_visible ? 'menu-links--teams-visible' : ''">
                     <div class="menu-links__links">
                         <router-link to="/auth/user/account"><t>Settings</t></router-link>
+                        <a @click="menu_teams_visible = true">
+                            Switch Team <sprite id="arrow-right" class="icon-link-small relative top-4" />
+                        </a>
+                        <span></span>
                         <a @click="logout" class="color-red">Logout <sprite id="logout" class="icon-link-small" /><t> </t></a>
                     </div>
-                    <div class="menu-links__teams" v-if="$store.state.Auth.teams !== false">
+                    <div class="menu-links__teams" v-if="Auth.teams !== false">
                         <a @click="menu_teams_visible = false">
                             <sprite id="arrow-left" class="icon-link-small" /> <t>Back</t>
                         </a>
 
                         <div v-show="menu_teams_visible">
-                            <a v-for="team in $store.state.Auth.teams" :key="team.id" @click="switchTeam(team.id)" class="menu-links__team">
+                            <a v-for="team in Auth.teams" :key="team.id" @click="switchTeam(team.id)" class="menu-links__team">
                                 <div><img :src="UPLOADS_URL + team.meta.image_path" v-if="team.meta.image_path" /></div>
                                 {{ team.name }}
                             </a>
