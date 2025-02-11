@@ -43,7 +43,7 @@ class Handler extends ExceptionHandler
 
     public function report(\Throwable $exception)
     {
-        if ($this->shouldReport($exception)) {
+        if ( $this->shouldReport($exception) && !app()->runningInConsole()) {
             $request = request();
             $url = $request->url();
             $params = http_build_query(array_filter($request->query(), function($value, $key) {

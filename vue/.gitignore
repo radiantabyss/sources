@@ -23,11 +23,9 @@ yarn-error.log*
 
 public/*
 release/*
-src/static/images/sprite.png
-src/static/images/sprite@2x.png
 
-src/Sass/app.scss
-src/Sass/abstracts/_sprites.scss
+app/Sass/app.scss
+app/Sass/abstracts/_sprites.scss
 
 /a
 /static/sprites.svg

@@ -77,7 +77,7 @@ export default {
                             Switch Team <sprite id="arrow-right" class="icon-link-small relative top-4" />
                         </a>
                         <span></span>
-                        <a @click="logout" class="color-red">Logout <sprite id="logout" class="icon-link-small" /><t> </t></a>
+                        <a @click="logout" class="color-red"><t>Logout</t> <sprite id="logout" class="icon-link-small" /></a>
                     </div>
                     <div class="menu-links__teams" v-if="Auth.teams !== false">
                         <a @click="menu_teams_visible = false">

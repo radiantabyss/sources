@@ -22,9 +22,9 @@ return [
     'JWT_SECRET' => '1234',
     'JWT_LIFETIME' => 1000000,
 
-    'FRONT_URL' => 'http://front',
-    'BACK_URL' => 'http://back',
-    'UPLOADS_URL' => 'http://back/uploads',
+    'FRONT_URL' => 'http://ra-front',
+    'BACK_URL' => 'http://ra-back',
+    'UPLOADS_URL' => 'http://ra-back/uploads',
     'UPLOADS_PATH' => '/public/uploads',
 
     'MAIL_DRIVER' => 'smtp',
