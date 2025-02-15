@@ -32,11 +32,5 @@ function handleDevMode() {
 export default () => {
     handleDevMode();
 
-    ContextMenu([
-        'Logs', '',
-        'MakeTransparent', 'ToggleHeader', 'ToggleHeaderActions', '',
-        'SnapToTop', 'SnapToBottom', 'SnapToLeft', 'SnapToRight', '',
-        'Edit', 'ArrangeSwatches', 'AddSeparator', 'AddLabel', '',
-        'Reload', 'Close',
-    ]);
+    ContextMenu([]);
 }
