@@ -100,7 +100,7 @@ export default {
                         </div>
                     </td>
                     <td>{{ Str.ucwords(team.role) }}</td>
-                    <td>{{ Str.prettify_datetime(team.joined_at) }}</td>
+                    <td>{{ Str.pretty_datetime(team.joined_at) }}</td>
                 </tr>
             </tbody>
         </table>

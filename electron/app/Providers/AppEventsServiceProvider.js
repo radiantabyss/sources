@@ -1,11 +1,8 @@
 import { app, dialog } from 'electron';
 
-import Shortcut from './../Modules/Shortcut.js';
 import Tray from './../Modules/Tray.js';
 import MainWindow from './../Windows/MainWindow.js';
 import UpdateWindow from './../Windows/UpdateWindow.js';
-import PanelWindow from './../Windows/PanelWindow.js';
-import PanelPresenter from './../Domains/Panel/Presenters/Presenter.js';
 
 let self = {
     register() {
@@ -20,8 +17,6 @@ let self = {
         if ( ENV.ENABLE_TRAY ) {
             Tray.create();
         }
-
-        Shortcut.registerAll();
 
         //parse args
         let args = {};
@@ -41,26 +36,7 @@ let self = {
             }
         }
 
-        //create a panel window if args.panel is set
-        if ( args.panel_id ) {
-            try {
-                let panel = await Model.Panel.find(args.panel_id);
-                panel = PanelPresenter.run(panel);
-                PanelWindow.create(panel);
-            }
-            catch(e) {
-                dialog.showMessageBoxSync({
-                    type: 'error',
-                    buttons: ['Ok'],
-                    title: 'Error',
-                    message: 'Panel not found.'
-                });
-                app.quit();
-            }
-        }
-        else {
-            UpdateWindow.create();
-        }
+        UpdateWindow.create();
     },
 
     windowAllClosed() {
@@ -80,7 +56,6 @@ let self = {
     },
 
     beforeQuit() {
-        Shortcut.unregisterAll();
         Tray.destroy();
     },
 
@@ -103,24 +78,7 @@ let self = {
             }
         }
 
-        if ( args.panel_id ) {
-            try {
-                let panel = await Model.Panel.find(args.panel_id);
-                panel = PanelPresenter.run(panel);
-                PanelWindow.create(panel);
-            }
-            catch(e) {
-                dialog.showMessageBoxSync({
-                    type: 'error',
-                    buttons: ['Ok'],
-                    title: 'Error',
-                    message: 'Panel not found.'
-                });
-            }
-        }
-        else {
-            MainWindow.show();
-        }
+        MainWindow.show();
     },
 };
 

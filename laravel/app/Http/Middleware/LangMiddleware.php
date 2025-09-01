@@ -15,27 +15,18 @@ class LangMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $lang = $this->getFromJwt($request) ?: ($this->getFromRequest($request) ?: config('app.default_lang'));
+        $lang = $this->getFromJwt() ?: ($this->getFromRequest($request) ?: config('app.default_lang'));
         \App::setLocale($lang);
 
         return $next($request);
     }
 
-    private function getFromJwt($request) {
-        //get jwt token from request
-        $payload = $request->get(config('jwt.input'));
-
-        if ( !$payload ) {
+    private function getFromJwt() {
+        if ( !\Auth::check() ) {
             return false;
         }
 
-        //validate token
-        $token = Jwt::validate($payload);
-        if ( $token === false ) {
-            return false;
-        }
-
-        return $token->lang ?? config('app.default_lang');
+        return \Auth::user()->meta['lang'] ?? config('app.default_lang');
     }
 
     private function getFromRequest($request) {

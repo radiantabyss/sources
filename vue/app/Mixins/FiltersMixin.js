@@ -2,6 +2,7 @@ export default {
     data() {
         return {
             fields: {},
+            initial_fields: {},
             store: false,
             trigger_watch_fields: false,
         }
@@ -49,10 +50,23 @@ export default {
         },
 
         clear() {
+            this.trigger_watch_fields = false;
+
+            let query = {};
+            if ( this.$route.query.tab ) {
+                query.tab = this.$route.query.tab;
+            }
+
+            this.fields = { ...this.initial_fields };
+
             this.$router.push({
                 path: this.$route.path,
-                query: {},
+                query,
             });
+
+            setTimeout(() => {
+                this.trigger_watch_fields = true;
+            }, 10);
 
             //save to storage
             if ( this.store ) {
@@ -70,9 +84,14 @@ export default {
 
             this.submit();
         },
+
+        exportResults() {
+            window.open(`${BACK_URL}${window.location.pathname}${window.location.search || '?'}&export=1&jwt_token=${localStorage.getItem('jwt_token')}`, '__blank');
+        },
     },
     mounted() {
         this.mount();
+        this.initial_fields = { ...this.fields };
     },
     watch: {
         $route() {

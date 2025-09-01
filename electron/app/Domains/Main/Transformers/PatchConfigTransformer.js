@@ -1,5 +1,5 @@
 let self = {
-    allowed_fileds: ['transparency_amount'],
+    allowed_fileds: [],
 
     run(data) {
         for ( let key in data ) {
@@ -7,7 +7,7 @@ let self = {
                 delete data[key];
             }
         }
-        
+
         return data;
     },
 }

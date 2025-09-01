@@ -126,7 +126,7 @@ export default {
                                         </option>
                                     </select>
                                 </td>
-                                <td>{{ Str.prettify_datetime(item.created_at) }}</td>
+                                <td>{{ Str.pretty_datetime(item.created_at) }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -160,7 +160,7 @@ export default {
                     </td>
                     <td>{{ invite.email }}</td>
                     <td>{{ Str.ucwords(invite.role) }}</td>
-                    <td>{{ Str.prettify_datetime(invite.expires_at) }}</td>
+                    <td>{{ Str.pretty_datetime(invite.expires_at) }}</td>
                     <td>
                         <a @click="resendInvite(invite.id)" title="Resend Invite">
                             <sprite id="resend" class="icon-link-small" />
