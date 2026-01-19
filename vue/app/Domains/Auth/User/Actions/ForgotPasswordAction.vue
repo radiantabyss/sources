@@ -11,7 +11,7 @@ export default {
                 _event: e,
                 ...this.fields,
             };
-            
+
             await Request.post('/auth/user/forgot-password', fields);
             this.fields = {};
             Alert.show('You will receive shortly an email with a reset link.');
@@ -30,7 +30,7 @@ export default {
             <form>
                 <div class="row">
                     <label><t>Email</t></label>
-                    <input type="email" v-model="fields.email" class="input input--full input--big" v-focus />
+                    <input type="email" v-model="fields.email" class="password--big" v-focus />
                 </div>
                 <div class="row">
                     <button type="submit" @click.prevent="submit" class="btn mb-20"><t>Submit</t></button>

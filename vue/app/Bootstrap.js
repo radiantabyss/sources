@@ -2,10 +2,10 @@
 import Clipboard from 'v-clipboard';
 
 //load support
-import Globals from './Support/Globals';
-import Helpers from './Support/Helpers';
-import Settings from './Support/Settings';
-import Str from './Support/Str';
+import Globals from './Support/Globals.js';
+import Helpers from './Support/Helpers.js';
+import Settings from './Support/Settings.js';
+import Str from './Support/Str.js';
 
 export default async (app) => {
     //custom modules

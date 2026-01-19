@@ -70,11 +70,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\DatabaseServiceProvider::class,
-        App\Providers\MailServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\ViewServiceProvider::class,
+        App\Providers\AuthProvider::class,
+        App\Providers\DatabaseProvider::class,
+        App\Providers\MailProvider::class,
+        App\Providers\RouteProvider::class,
+        App\Providers\ViewProvider::class,
 
     ],
 

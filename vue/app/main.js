@@ -3,20 +3,20 @@ import { createApp } from 'vue';
 import Layout from '@/Layout/Layout.vue';
 const app = createApp(Layout);
 
-import RABootstrap from '@radiantabyss/vue/src/Bootstrap';
-import Bootstrap from '@/Bootstrap';
+import RABootstrap from '@radiantabyss/vue/src/Bootstrap.js';
+import Bootstrap from '@/Bootstrap.js';
 
-import AuthServiceProvider from '@/Providers/AuthServiceProvider';
-import RouteServiceProvider from '@/Providers/RouteServiceProvider';
-import LangServiceProvider from '@/Providers/LangServiceProvider';
+import AuthProvider from '@/Providers/AuthProvider.js';
+import RouteProvider from '@/Providers/RouteProvider.js';
+import LangProvider from '@/Providers/LangProvider.js';
 
 RABootstrap(app)
 .then(async () => {
     await Bootstrap(app);
 
-    await AuthServiceProvider();
-    await RouteServiceProvider(app);
-    await LangServiceProvider(app);
+    await AuthProvider();
+    await RouteProvider(app);
+    await LangProvider(app);
 
     app.mount('#app');
 });

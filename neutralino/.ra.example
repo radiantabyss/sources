@@ -1,0 +1,4 @@
+BUILDER=neutralino
+FRONT_PATH=../front
+PLATFORMS=win_x64
+PUBLISH_SERVERS=51.15.118.2::/var/www/amp/front/public/releases

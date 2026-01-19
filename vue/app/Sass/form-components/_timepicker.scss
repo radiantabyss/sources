@@ -13,22 +13,18 @@
     justify-content: space-around;
     align-items: center;
     position: absolute;
-    top: 43px;
+    top: 100%;
     left: 0;
     z-index: 10;
     width: 130px;
     padding: 10px;
-    border-radius: 5px;
-    box-shadow: 1px 0 0 $lightgrey2, -1px 0 0 $lightgrey2,
-        0 1px 0 $lightgrey2, 0 -1px 0 $lightgrey2,
-        0 3px 13px rgba($black, 0.08);
+    border: 1px solid $primary;
+    border-radius: 4px;
     background: $bg-light;
     user-select: none;
 
     @include theme() {
-        box-shadow: 1px 0 0 $lightgrey2--dark, -1px 0 0 $lightgrey2--dark,
-            0 1px 0 $lightgrey2--dark, 0 -1px 0 $lightgrey2--dark,
-            0 3px 13px rgba($white, 0.08);
+        border-color: $primary--dark;
         background: $bg-light--dark;
     }
 

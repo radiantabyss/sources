@@ -1,6 +1,12 @@
 .tabs {
 }
 
+.tabs--with-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .tabs__menu {
     list-style: none;
     padding: 0;
@@ -13,7 +19,12 @@
         color: $text;
         text-decoration: none;
 
+        &:hover, &:active, &:focus {
+            color: $primary;
+        }
+
         &.active {
+            color: $primary;
             border-bottom: 2px solid $primary;
         }
     }
@@ -24,31 +35,33 @@
         a {
             color: $text--dark;
 
+            &:hover, &:active, &:focus, &.active  {
+                color: $primary2--dark;
+            }
+
             &.active {
+                border-bottom: 2px solid $primary2--dark;
+
                 @include theme() {
-                    border-color: $primary--dark;
+                    border-color: $primary2--dark;
                 }
             }
         }
     }
 }
 
-.tabs__menu-with-buttons {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid $border;
-
-    .tabs__menu {
-        border: none;
-    }
-
-    @include theme() {
-        border-color: $border--dark;
-    }
+.tabs__content {
+    margin-top: 20px;
 }
 
-.tabs__menu-buttons {
+.tabs__buttons {
     display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
     align-items: center;
-    padding: 0 0 10px;
+    padding-left: 30px;
+}
+
+.tabs__content {
+    flex: 0 0 100%;
 }

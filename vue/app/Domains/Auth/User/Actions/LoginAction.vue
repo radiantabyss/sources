@@ -36,7 +36,7 @@ export default {
                 </div>
                 <div class="row">
                     <label><t>Password</t></label>
-                    <password v-model="fields.password" class="input--big input--full" style="display: block;" />
+                    <password v-model="fields.password" class="password--big" />
                 </div>
                 <div class="row">
                     <button type="submit" @click.prevent="submit" class="btn mb-20"><t>Login</t></button>

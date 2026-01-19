@@ -6,7 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use RA\Auth\Services\SetUser;
 use App\Support\Gates;
 
-class AuthServiceProvider extends ServiceProvider
+class AuthProvider extends ServiceProvider
 {
     /**
      * The policy mappings for the application.

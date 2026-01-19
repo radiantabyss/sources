@@ -11,25 +11,19 @@
 }
 
 .datepicker__content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
     max-width: 230px;
     padding: 3px;
+    border: 1px solid $primary;
+    border-radius: 4px;
     background: $bg-light;
 
     @include theme() {
-        background: $bg-light--dark;
-    }
-}
-
-.datepicker__content {
-    position: absolute;
-    top: 36px;
-    left: 0;
-    z-index: 100;
-    border: 1px solid $primary;
-    border-radius: 4px;
-
-    @include theme() {
         border-color: $primary--dark;
+        background: $bg-light--dark;
     }
 }
 

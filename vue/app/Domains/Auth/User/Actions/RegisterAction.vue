@@ -38,7 +38,7 @@ export default {
                 </div>
                 <div class="row">
                     <label><t>Password</t></label>
-                    <password v-model="fields.password" class="input--big input--full" style="display: block;" />
+                    <password v-model="fields.password" class="password--big" />
                 </div>
                 <div class="row">
                     <t>By continuing you agree to our</t> <a href="/terms" target="_blank"><t>Terms</t></a>

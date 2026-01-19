@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class MailServiceProvider extends ServiceProvider
+class MailProvider extends ServiceProvider
 {
     public function boot() {
         //register mail views
