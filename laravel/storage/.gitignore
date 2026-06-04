@@ -1,9 +1,0 @@
-*
-!app/
-!fonts/
-!framework/
-!geoip/
-!logs/
-!puppeteer/
-!test/
-!.gitignore
