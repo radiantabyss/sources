@@ -36,10 +36,9 @@ export default {
             let fields = {
                 id,
                 role: e.target.value,
-                team_id: this.$route.params.id,
             };
 
-            await Request.post(`/auth/team/change-role`, fields);
+            await Request.post(`/auth/team/change-role/${this.$route.params.id}`, fields);
         },
 
         async deleteItem(id) {
@@ -47,17 +46,17 @@ export default {
                 question: 'Are you sure you want to delete this user?',
             });
 
-            await Request.get(`/auth/team/delete-member/${id}`);
+            await Request.get(`/auth/team/delete-member/${this.$route.params.id}/${id}`);
             this.items = Items.delete(this.items, id);
         },
 
         async deleteInvite(id) {
-            await Request.get(`/auth/team/delete-invite/${id}`);
+            await Request.get(`/auth/team/delete-invite/${this.$route.params.id}/${id}`);
             this.invites = Items.delete(this.invites, id);
         },
 
         async resendInvite(id) {
-            let data = await Request.post(`/auth/team/resend-invite/${id}`);
+            let data = await Request.post(`/auth/team/resend-invite/${this.$route.params.id}/${id}`);
             Alert.show('Invite resent!', 'success');
             this.invites = Items.replace(this.invites, data.invite);
         },
@@ -83,7 +82,7 @@ export default {
     <div class="panel col-60">
         <div class="subtitle flex space-between">
             <span></span>
-            <a @click="Modal.show('invite')" class="btn btn--small btn--auto btn--icon-nm">
+            <a @click="Modal.show('invite', $route.params.id)" class="btn btn--small btn--auto btn--icon-nm">
                 <sprite id="plus"/> Invite Members
             </a>
         </div>
@@ -121,7 +120,7 @@ export default {
                                 <td>
                                     <span v-if="item.role == 'owner'">Owner</span>
                                     <select class="input input--auto" @change="changeRole(item.id, $event)" v-else>
-                                        <option v-for="role in Settings.allowed_team_roles" :key="role" :value="role" :selected="role == item.role">
+                                        <option v-for="role in Settings.team_roles" :key="role" :value="role" :selected="role == item.role">
                                             {{ Str.ucwords(role) }}
                                         </option>
                                     </select>

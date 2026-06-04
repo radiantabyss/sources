@@ -4,19 +4,30 @@ export default {
     data() {
         return {
             name: 'invite',
+            team_id: null,
             fields: {
-                role: Settings.allowed_team_roles[0],
+                role: Settings.team_roles[0],
             },
         }
     },
     methods: {
+        beforeOpen(e) {
+            this.fields = {
+                role: Settings.team_roles[0],
+            };
+            
+            this.team_id = e.params;
+            await this.$nextTick();
+            this.$refs.emails.focus();
+        },
+
         async submit(e) {
             let fields = {
                 _event: e,
                 ...this.fields,
             };
 
-            let data = await Request.post(`/auth/team/invite/${this.$route.params.id}`, fields);
+            let data = await Request.post(`/auth/team/invite/${this.team_id}`, fields);
 
             Alert.show('Invites sent!', 'success');
             this.$emit('submit', data.invites);
@@ -27,7 +38,7 @@ export default {
 </script>
 
 <template>
-<modal :name="name" class="modal--small">
+<modal :name="name" class="modal--small" @before-open="beforeOpen">
     <div class="subtitle text-center">Invite Members</div>
     <div class="row">
         <label><div>Emails <i>separated by space or commas</i></div></label>
@@ -36,7 +47,7 @@ export default {
     <div class="row">
         <label>Role</label>
         <select class="input input--full" v-model="fields.role">
-            <option v-for="role in Settings.allowed_team_roles" :key="role" :value="role">
+            <option v-for="role in Settings.team_roles" :key="role" :value="role">
                 {{ Str.ucwords(role) }}
             </option>
         </select>

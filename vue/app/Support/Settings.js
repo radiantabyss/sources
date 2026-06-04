@@ -1,3 +1,3 @@
 export default {
-    allowed_team_roles: ['admin', 'member'],
+    team_roles: ['admin', 'member'],
 }

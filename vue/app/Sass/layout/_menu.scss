@@ -26,10 +26,10 @@
         height: 35px;
         margin-right: 10px;
         border-radius: 35px;
-        background: $border--dark;
+        background: $border;
 
         @include theme() {
-            background: $border;
+            background: $border--dark;
         }
     }
 
