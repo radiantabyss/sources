@@ -1,6 +1,5 @@
 <script>
 export default {
-    name: 'Sidebar',
     data() {
         return {
             links: [

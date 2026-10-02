@@ -6,7 +6,6 @@ import Sidebar from './Sidebar.vue';
 import Footer from './Footer.vue';
 
 export default {
-    name: 'Layout',
     components: { Header, Sidebar, Footer },
     methods: {
         mount() {
@@ -57,6 +56,13 @@ export default {
     </transition>
 
     <Footer />
+
+    <!-- Global Chrome Autofill Honeypot -->
+    <div style="position: absolute; top: -9999px; left: -9999px; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true">
+        <input type="text" name="chrome_autofill_user" autocomplete="username" tabindex="-1" />
+        <input type="email" name="chrome_autofill_email" autocomplete="email" tabindex="-1" />
+        <input type="password" name="chrome_autofill_pass" autocomplete="current-password" tabindex="-1" />
+    </div>
 </template>
 
 <template v-else>

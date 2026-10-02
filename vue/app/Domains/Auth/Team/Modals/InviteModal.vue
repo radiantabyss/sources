@@ -1,6 +1,5 @@
 <script>
 export default {
-    name: 'InviteModal',
     data() {
         return {
             name: 'invite',
@@ -11,11 +10,11 @@ export default {
         }
     },
     methods: {
-        beforeOpen(e) {
+        async beforeOpen(e) {
             this.fields = {
                 role: Settings.team_roles[0],
             };
-            
+
             this.team_id = e.params;
             await this.$nextTick();
             this.$refs.emails.focus();

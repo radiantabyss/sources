@@ -1,6 +1,5 @@
 <script>
 export default {
-    name: 'Details',
     data() {
         return {
             fields: false,

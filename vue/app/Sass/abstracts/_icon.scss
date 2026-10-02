@@ -35,6 +35,29 @@
     }
 }
 
+.icon-link-small {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 14px;
+    height: 14px;
+
+    svg {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+.icon-link--fix {
+    position: relative;
+    top: -1px;
+}
+
+.icon-link--fix-bot {
+    position: relative;
+    top: 3px;
+}
+
 .icon {
     width: 20px;
     height: 20px;
@@ -53,29 +76,6 @@
 
 .icon-flipped {
     transform: rotate(180deg);
-}
-
-.icon-link--fix {
-    position: relative;
-    top: -1px;
-}
-
-.icon-link--fix-bot {
-    position: relative;
-    top: 3px;
-}
-
-.icon-link-small {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 14px;
-    height: 14px;
-
-    svg {
-        max-width: 100%;
-        max-height: 100%;
-    }
 }
 
 .icon-dots,

@@ -1,6 +1,5 @@
 <script>
 export default {
-    name: 'Teams',
     data() {
         return {
             teams: false,

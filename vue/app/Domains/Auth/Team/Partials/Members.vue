@@ -2,7 +2,6 @@
 import InviteModal from './../Modals/InviteModal';
 
 export default {
-    name: 'Members',
     components: { InviteModal },
     data() {
         return {

@@ -1,6 +1,5 @@
 <script>
 export default {
-    name: 'Header',
     data() {
         return {
             menu_visible: false,
