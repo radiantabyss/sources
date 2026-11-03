@@ -40,5 +40,5 @@ return [
     'MAILGUN_ENDPOINT' => '',
 
     'MONITOR_LOGS' => false,
-    'MONITOR_LOGS_SLACK_CHANNEL' => '',
+    'MONITOR_LOGS_RELAYJAY_CHANNEL' => '',
 ];

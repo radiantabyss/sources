@@ -152,6 +152,23 @@
     }
 }
 
+.btn-clear {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: none;
+    color: $text;
+    font-family: $font-medium;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none !important;
+}
+
 //colors
 $colors: (
     "red": $red,
@@ -188,48 +205,4 @@ $colors: (
             }
         }
     }
-}
-
-
-.btn--facebook {
-    background: $facebook;
-    color: $white;
-
-    &:hover, &:active, &:focus {
-        color: $white;
-        background: lighten($facebook, 5%);
-        box-shadow: none;
-        text-decoration: none;
-    }
-}
-
-.btn--tiktok {
-    background: $tiktok;
-    background: linear-gradient(158deg, $tiktok 10%, $tiktok2 86%);
-    background-size: 150% 150%;
-    color: $white;
-    transition: all 0.2s ease;
-
-    &:hover, &:active, &:focus {
-        color: $white;
-        box-shadow: none;
-        background-position: 50% 0%;
-    }
-}
-
-.btn-clear {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    border: none;
-    background: none;
-    color: $text;
-    font-family: $font-medium;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    outline: none !important;
 }
