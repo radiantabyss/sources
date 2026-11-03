@@ -1,8 +1,0 @@
-/node_modules
-/dist
-/release
-
-.env
-app/Sass/app.scss
-app/Sass/abstracts/_sprites.scss
-public/sprites.svg
